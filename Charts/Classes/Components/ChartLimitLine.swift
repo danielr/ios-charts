@@ -38,8 +38,9 @@ public class ChartLimitLine: ChartComponentBase
     public var valueTextColor = UIColor.blackColor()
     public var valueFont = UIFont.systemFontOfSize(13.0)
     public var label = ""
+    public var labelIcon: UIImage?
     public var labelPosition = ChartLimitLabelPosition.RightTop
-    
+
     public override init()
     {
         super.init()

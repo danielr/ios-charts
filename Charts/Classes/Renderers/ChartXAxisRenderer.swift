@@ -313,14 +313,39 @@ public class ChartXAxisRenderer: ChartAxisRendererBase
     
     public func renderLimitLineLabel(context context: CGContext, limitLine: ChartLimitLine, position: CGPoint, yOffset: CGFloat)
     {
+        var xOffset: CGFloat = limitLine.lineWidth + limitLine.xOffset
+        
+        // icon
+        if let icon = limitLine.labelIcon
+        {
+            switch limitLine.labelPosition  {
+            case .RightTop:
+                icon.drawAtPoint(CGPoint(
+                    x: position.x + xOffset,
+                    y: viewPortHandler.contentTop + yOffset))
+            case .RightBottom:
+                icon.drawAtPoint(CGPoint(
+                    x: position.x + xOffset,
+                    y: viewPortHandler.contentBottom - icon.size.height - yOffset))
+            case .LeftTop:
+                icon.drawAtPoint(CGPoint(
+                    x: position.x - xOffset - icon.size.width,
+                    y: viewPortHandler.contentTop + yOffset))
+            case .LeftBottom:
+                icon.drawAtPoint(CGPoint(
+                    x: position.x - xOffset - icon.size.width,
+                    y: viewPortHandler.contentBottom - icon.size.height - yOffset))
+            }
+            xOffset += icon.size.width + 4.0
+        }
+        
+        
         let label = limitLine.label
         
         // if drawing the limit-value label is enabled
         if (label.characters.count > 0)
         {
             let labelLineHeight = limitLine.valueFont.lineHeight
-            
-            let xOffset: CGFloat = limitLine.lineWidth + limitLine.xOffset
             
             if (limitLine.labelPosition == .RightTop)
             {
